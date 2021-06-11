@@ -5,7 +5,6 @@ import urllib.request
 import urllib
 import json
 import pandas
-import time
 from datetime import datetime
 from datetime import timedelta
 
