@@ -17,9 +17,8 @@ try:
 except:
     print("Not Connected!")
 
-print("hello")
-
 encodingKey = "dXMdC0X%2BDRPxGEQ2sYQG5xKCJCFzRrcmxMmOq1qrB1RrV9FaWdA8tFGTsRXx1TLIxqEQTKdOWhTmFsYz0qyb%2Fg%3D%3D"  #인코딩 인증키
+decodingKey = "dXMdC0X+DRPxGEQ2sYQG5xKCJCFzRrcmxMmOq1qrB1RrV9FaWdA8tFGTsRXx1TLIxqEQTKdOWhTmFsYz0qyb/g=="
 
 #시도별 데이터 수집하기 위한 배열 선언
 sido_arr = ['서울', '부산', '대구', '인천', '광주', '울산', '세종', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주']
