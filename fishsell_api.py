@@ -1,0 +1,66 @@
+#-*- coding:utf-8 -*-
+import psycopg2
+import urllib.request
+import urllib
+import json
+import pandas
+import time
+
+#Try to connect DB
+try:
+    conn = psycopg2.connect(host="127.0.0.1", dbname="postgres", user="postgres", password="1234")
+
+    cur=conn.cursor()
+    cur.execute("SELECT * FROM fishsell;")
+    rows = cur.fetchall()
+
+except:
+    print("Not Connected!")
+
+#인증키
+encodingkey = "dXMdC0X%2BDRPxGEQ2sYQG5xKCJCFzRrcmxMmOq1qrB1RrV9FaWdA8tFGTsRXx1TLIxqEQTKdOWhTmFsYz0qyb%2Fg%3D%3D"
+decodingkey = "dXMdC0X+DRPxGEQ2sYQG5xKCJCFzRrcmxMmOq1qrB1RrV9FaWdA8tFGTsRXx1TLIxqEQTKdOWhTmFsYz0qyb/g=="
+
+#날짜별 데이터 수집하기 위한 날짜 생성
+date_index = pandas.date_range(start='20210101', end='20210611')
+date_list = date_index.strftime("%Y%m%d").tolist()
+
+for date in date_list:
+    
+    #request url 정의
+    url = "http://apis.data.go.kr/1192000/openapi/service/ManageAcst0110Service/getAcst0110List?ServiceKey={0}&pageNo=1&numOfRows=10&type=json&baseDt={1}".format(encodingkey, date)
+    request = urllib.request.Request(url)
+
+    #request 보내기 (header 정보를 포함한 request 객체를 전달)
+    response = urllib.request.urlopen(request)
+
+    #결과 코드 정의 (getcode 메소드를 통해서 response의 HTTP status code를 확인)
+    rescode = response.getcode()
+
+    #정상 호출인 경우 utf-8 형식으로 디코딩
+    if(rescode==200):
+        response_body = response.read().decode('utf-8')
+
+    else:
+        print("Error Code:" + rescode)
+
+    #딕셔너리 구조로 파싱
+    jsonobj = json.loads(response_body)
+
+    #responseJson/body/item부터 수집
+    items = jsonobj['responseJson']['body']['item']
+
+    for item in items:
+        
+        #쿼리 지정
+        query = "INSERT INTO fishsell(csmtDe, mxtrCode, mxtrNm, csmtmktCode, csmtmktNm, mprcStdCode, mprcStdCodeNm, kdfshSttusCode, kdfshSttusNm, fshrNm,  csmtQy, csmtWt, csmtUntpc, csmtAmount, goodsStndrdNm, goodsUnitNm) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+        #query = "INSERT INTO fishsell VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+
+        #items(딕셔너리)를 배열로 넣어줘야한다.
+        #배열 생성 및 주입
+        items_arr = []
+
+        for column_nm in item:
+            items_arr.append(item[column_nm])       
+        cur.execute(query, items_arr)
+        conn.commit()
