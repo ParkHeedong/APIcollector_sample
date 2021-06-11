@@ -1,9 +1,11 @@
 #-*- coding:utf-8 -*-
+import time
 from numpy import insert
 import psycopg2
 import urllib.request
 import urllib
 import json
+import time
 import pandas
 from datetime import datetime
 from datetime import timedelta
