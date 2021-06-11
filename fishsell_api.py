@@ -30,25 +30,26 @@ now = datetime.now()
 date_index = pandas.date_range(start='20210601', end=now.strftime("%Y%m%d"))#최신날짜 업데이트 되는 구문 추가
 date_list = date_index.strftime("%Y%m%d").tolist()
 
+#기간검색 시작일자와 종료일자 계산
 start_dt_str = '20210101'
 now = datetime.now()
 end_dt_str = '20210101'
 
+#한번에 조회되는 날짜가 최대 7일이므로 시작일자 종료일자 재생성(url)
 while(datetime.strptime(end_dt_str, "%Y%m%d") <= now):
     end_dt = datetime.strptime(start_dt_str, "%Y%m%d") + timedelta(days=6)
     end_dt_str = end_dt.strftime("%Y%m%d")
 
+    #페이지 계산을 위한 초기값
     pageNo = 1
     maxPage = 10
 
+    #현재 페이지가 총 페이지 수를 벗어나지 않는 동안 적재
     while(pageNo < maxPage):
 
     
         #request url 정의
         url = "http://apis.data.go.kr/1192000/openapi/service/ManageAcst0110Service/getAcst0110List?ServiceKey={0}&pageNo={1}&numOfRows=100&fromDt={2}&toDt={3}&type=json".format(encodingkey, pageNo, start_dt_str , end_dt_str)
-        
-    # for pageNo_list in totalCount
-
         request = urllib.request.Request(url)
 
         #request 보내기 (header 정보를 포함한 request 객체를 전달)
@@ -73,8 +74,6 @@ while(datetime.strptime(end_dt_str, "%Y%m%d") <= now):
         #마지막 페이지 계산
         maxPage = (totalcount // 100) + 1
 
-
-
         #responseJson/body/item부터 수집
         items = jsonobj['responseJson']['body']['item']
         
@@ -95,8 +94,10 @@ while(datetime.strptime(end_dt_str, "%Y%m%d") <= now):
 
         print('{} 적재 성공'.format(start_dt_str))
 
-        
+        #url에 들어가는 pageNo 재생성
         pageNo += 1
 
+    #날짜는 바뀌면 안되므로 한단계 밖 for문으로 꺼냄
+    #시작일자 = 종료일자 + 1 (다음 날 계산하기 위함)
     start_dt = end_dt + timedelta(days=1)
     start_dt_str = start_dt.strftime("%Y%m%d")    
