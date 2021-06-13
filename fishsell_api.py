@@ -47,7 +47,6 @@ while(datetime.strptime(end_dt_str, "%Y%m%d") <= now):
     #현재 페이지가 총 페이지 수를 벗어나지 않는 동안 적재
     while(pageNo < maxPage):
 
-    
         #request url 정의
         url = "http://apis.data.go.kr/1192000/openapi/service/ManageAcst0110Service/getAcst0110List?ServiceKey={0}&pageNo={1}&numOfRows=100&fromDt={2}&toDt={3}&type=json".format(encodingkey, pageNo, start_dt_str , end_dt_str)
         request = urllib.request.Request(url)
