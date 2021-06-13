@@ -33,7 +33,7 @@ date_list = date_index.strftime("%Y%m%d").tolist()
 #기간검색 시작일자와 종료일자 계산
 start_dt_str = '20210101'
 now = datetime.now()
-end_dt_str = '20210101'
+end_dt_str = '20210102'
 
 #한번에 조회되는 날짜가 최대 7일이므로 시작일자 종료일자 재생성(url)
 while(datetime.strptime(end_dt_str, "%Y%m%d") <= now):
