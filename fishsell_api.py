@@ -1,5 +1,4 @@
 #-*- coding:utf-8 -*-
-import time
 from numpy import insert
 import psycopg2
 import urllib.request
@@ -32,15 +31,14 @@ date_list = date_index.strftime("%Y%m%d").tolist()
 
 #기간검색 시작일자와 종료일자 계산
 start_dt_str = '20210101'
-now = datetime.now()
 end_dt_str = '20210102'
 
 #한번에 조회되는 날짜가 최대 7일이므로 시작일자 종료일자 재생성(url)
 while(datetime.strptime(end_dt_str, "%Y%m%d") <= now):
     end_dt = datetime.strptime(start_dt_str, "%Y%m%d") + timedelta(days=6)
-    end_dt_str = end_dt.strftime("%Y%m%d")
+    end_dt_str = end_dt.strftime("%Y%m%d") #url에서 읽을 수 있게 type을 string으로 바꿔줌
 
-    #페이지 계산을 위한 초기값
+    #페이지 계산을 위한 초기값(아무거나)
     pageNo = 1
     maxPage = 10
 
