@@ -29,6 +29,10 @@ novel_prize_json = json.loads(novel_prize_json_file.decode('utf-8'))
 
 #print(json.dumps(novel_prize_json['prizes'][0], indent=4, sort_keys=True))
 
+#novel_prize_physics = pd.DataFrame(novel_prize_json['prizes'][0]["laureates"])
+
+#칼럼 순서를 columns로 지정
 novel_prize_physics= pd.DataFrame(novel_prize_json['prizes'][0]["laureates"], columns=['motivation', 'share', 'surname', 'id', 'firstname'])
 
 print(novel_prize_physics)
+
