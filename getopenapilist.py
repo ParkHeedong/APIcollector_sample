@@ -1,4 +1,3 @@
-import psycopg2
 import urllib.request
 import json
 import time
