@@ -44,7 +44,6 @@ def main():
                 maxPage = response_body['totalCount']//perPage + 1  # maxPage 계산
                 data_list = response_body['data']
                 df = json_normalize(data_list)  # dict 형식의 데이터 dataframe으로 변환
-                print(df)
                 df.to_sql("getopenapilist", engine, if_exists='append', index=False, chunksize=1000)  # dataframe형식의 데이터 바로 DB로 넣기
                 print("{}/{} 페이지 수집/적재 완료".format(page, maxPage))
             except Exception as e:
