@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 import psycopg2
 import urllib.request
 import json
@@ -28,29 +29,27 @@ def get_response(request):
                     return None
 
 def main():
-    serviceKey = "dXMdC0X%2BDRPxGEQ2sYQG5xKCJCFzRrcmxMmOq1qrB1RrV9FaWdA8tFGTsRXx1TLIxqEQTKdOWhTmFsYz0qyb%2Fg%3D%3D"
-    page = 0
-    perPage = 3000
+    serviceKey = "SEgDr%2FYfqIy3tcVNcNig53XdZI1%2FH4ab1uvtyOvmZscb1FgQqDvCansKw32gueJ75vcmMLPnYK%2FBWKYRTlGKAw%3D%3D"
+    pageNo = 0
     maxPage = 10
-    while(page < maxPage):
-        page += 1
-        url = "https://api.odcloud.kr/api/15077093/v1/open-data-list?page={0}&perPage={1}&returnType=JSON&serviceKey={2}".format(page, perPage, serviceKey)
+    while(pageNo < maxPage):
+        pageNo += 1
+        url = "http://apis.data.go.kr/1192000/openapi/service/ManageExpNationItemService/getExpNationItemList?ServiceKey={0}&baseDt=201712&pageNo={1}&numOfRows=100&type=json".format(serviceKey, pageNo)
         request = urllib.request.Request(url)
         response = get_response(request)
         rescode = response.getcode()
         if(rescode==200):
             try:
-                response_body = json.loads(response.read())  # 데이터
-                maxPage = response_body['totalCount']//perPage + 1  # maxPage 계산
-                data_list = response_body['data']
-                df = json_normalize(data_list)  # dict 형식의 데이터 dataframe으로 변환
-                print(df)
-                df.to_sql("getopenapilist", engine, if_exists='append', index=False, chunksize=1000)  # dataframe형식의 데이터 바로 DB로 넣기
-                print("{}/{} 페이지 수집/적재 완료".format(page, maxPage))
+                response_body = json.loads(response.read()) #데이터
+                maxPage = response_body['responseJson']['header']['totalCount']//100 #maxPage 계산
+                data_list = response_body['responseJson']['body']['item'] 
+                df = json_normalize(data_list) #dict 형식의 데이터 dataframe 형식으로 변환(테이블)
+                df.to_sql("getimportexportlist", engine, if_exists='append', index=False, chunksize=1000) #dataframe 형식의 데이터 DB로 적재
+                print("{}/{} 페이지 수집/적재 완료".format(pageNo, maxPage))
             except Exception as e:
-                print("{}/{} 페이지 수집/적재 실패".format(page, maxPage))
+                print("{}/{} 페이지 수집/적재 실패".format(pageNo, maxPage))
         else:
-            print("{}/{} 페이지 수집/적재 실패".format(page, maxPage))
+            print("{}/{} 페이지 수집/적재 실패".format(pageNo, maxPage))
 
 if __name__ == "__main__":
     main()
