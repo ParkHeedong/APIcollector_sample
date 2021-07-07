@@ -47,7 +47,7 @@ def main():
                 print("{}/{} 페이지 수집/적재 성공".format(pageNo, maxPage))
             except Exception as e:
                 print("{}/{} 페이지 수집/적재 실패".format(pageNo, maxPage))
-
+                
         else:
             print("{}/{} 페이지 수집/적재 실패".format(pageNo, maxPage))
            
