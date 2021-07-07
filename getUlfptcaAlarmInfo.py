@@ -28,28 +28,31 @@ def get_response(request):
                     return None
 
 def main():
-    serviceKey = "SEgDr%2FYfqIy3tcVNcNig53XdZI1%2FH4ab1uvtyOvmZscb1FgQqDvCansKw32gueJ75vcmMLPnYK%2FBWKYRTlGKAw%3D%3D"
-    pageNo = 0
-    maxPage = 10
-    while(pageNo < maxPage):
-        pageNo += 1
-        url = "http://apis.data.go.kr/B552584/UlfptcaAlarmInqireSvc/getUlfptcaAlarmInfo?year=2018&pageNo={0}&numOfRows=100&returnType=json&serviceKey={1}".format(pageNo, serviceKey)
-        request = urllib.request.Request(url)
-        response = get_response(request)
-        rescode = response.getcode()
-        if(rescode==200):
-            try:
-                response_body = json.loads(response.read())
-                maxPage = response_body['response']['body']['totalCount']//100
-                data_list = response_body['response']['body']['items']
-                df = json_normalize(data_list)
-                df.to_sql("getUlfqtcaAlarmInfo", engine, if_exists='append', index='false', chunksize=1000)
-                print("{}/{} 페이지 수집/적재 성공".format(pageNo, maxPage))
-            except Exception as e:
-                print("{}/{} 페이지 수집/적재 실패".format(pageNo, maxPage))
-                
-        else:
-            print("{}/{} 페이지 수집/적재 실패".format(pageNo, maxPage))
-           
+    year = 2018
+    while(year < 2022):
+        serviceKey = "SEgDr%2FYfqIy3tcVNcNig53XdZI1%2FH4ab1uvtyOvmZscb1FgQqDvCansKw32gueJ75vcmMLPnYK%2FBWKYRTlGKAw%3D%3D"
+        pageNo = 0
+        maxPage = 10
+        while(pageNo < maxPage):
+            pageNo += 1
+            url = "http://apis.data.go.kr/B552584/UlfptcaAlarmInqireSvc/getUlfptcaAlarmInfo?year={0}&pageNo={1}&numOfRows=100&returnType=json&serviceKey={2}".format(year, pageNo, serviceKey)
+            request = urllib.request.Request(url)
+            response = get_response(request)
+            rescode = response.getcode()
+            if(rescode==200):
+                try:
+                    response_body = json.loads(response.read())
+                    maxPage = response_body['response']['body']['totalCount']//100 + 1
+                    data_list = response_body['response']['body']['items']
+                    df = json_normalize(data_list)
+                    df.to_sql("getUlfqtcaAlarmInfo", engine, if_exists='append', index='false', chunksize=1000)
+                    print("{0}년도 {1}/{2} 페이지 수집/적재 성공".format(year, pageNo, maxPage))
+                except Exception as e:
+                    print("{0}년도 {1}/{2} 페이지 수집/적재 실패".format(year, pageNo, maxPage))
+
+            else:
+                print("{0}년도 {1}/{2} 페이지 수집/적재 실패".format(year, pageNo, maxPage))
+        year += 1
+
 if __name__ == "__main__":
     main()
