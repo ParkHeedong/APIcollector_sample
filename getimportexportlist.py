@@ -41,7 +41,7 @@ def main():
         if(rescode==200):
             try:
                 response_body = json.loads(response.read()) #데이터
-                maxPage = response_body['responseJson']['header']['totalCount']//100 #maxPage 계산
+                maxPage = response_body['responseJson']['header']['totalCount']//100 + 1 #maxPage 계산
                 data_list = response_body['responseJson']['body']['item'] 
                 df = json_normalize(data_list) #dict 형식의 데이터 dataframe 형식으로 변환(테이블)
                 df.to_sql("getimportexportlist", engine, if_exists='append', index=False, chunksize=1000) #dataframe 형식의 데이터 DB로 적재
