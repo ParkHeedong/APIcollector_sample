@@ -15,14 +15,14 @@ def get_response(request):
         return response
     except HTTPError as ex:
         for i in range(5):
-            print("{}차 재시도 전 대기 중...".format(i+1))
+            print("{}차 재시도 전 대기 중..".format(i+1))
             time.sleep(60)
             try:
                 response = urllib.request.urlopen(request)
-                print("{}차 재시도 성공...".format(i+1))
+                print("{}차 재시도 성공".format(i+1))
                 return response
             except HTTPError as ex:
-                print("{}차 재시도 실패...".format(i+1))
+                print("{}차 재시도 실패".format(i+1))
                 if (i==4):
                     return None
 
