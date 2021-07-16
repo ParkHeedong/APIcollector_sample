@@ -22,7 +22,7 @@ def get_response(request):
                 print("{}차 재시도 성공...".format(i+1))
                 return response
             except HTTPError as ex:
-                print("{}차 재시동 실패...".format(i+1))
+                print("{}차 재시도 실패...".format(i+1))
                 if (i==4):
                     return None
 
