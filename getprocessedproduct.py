@@ -44,7 +44,7 @@ def main():
                     maxPage = response_body['responseJson']['header']['totalCount']//10 + 1
                     data_list = response_body['responseJson']['body']['item']
                     df = json_normalize(data_list)
-                    df.to_sql("getprocessedproduct", engine, if_exists='append', index='false', chunksize=1000)
+                    df.to_sql("getprocessedproduct", engine, if_exists='append', index=False, chunksize=1000)
                     print("{}년도 {}/{} 페이지 수집 / 적재 성공".format(baseDt, pageNo, maxPage))
                 except Exception as e:
                     print("{}년도 {}/{} 페이지 수집 / 적재 실패".format(baseDt, pageNo, maxPage))
