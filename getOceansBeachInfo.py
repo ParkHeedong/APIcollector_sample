@@ -52,7 +52,7 @@ def main():
                     maxPage = response_body['getOceansBeachInfo']['totalCount'] // response_body['getOceansBeachInfo']['numOfRows'] + 1
                     data_list = response_body['getOceansBeachInfo']['item']
                     df = json_normalize(data_list)
-                    df.to_sql("getOceansBeachInfo", engine, if_exists='append', index='false', chunksize=1000)
+                    df.to_sql("getOceansBeachInfo", engine, if_exists='append', index=False, chunksize=1000)
                     print("{}시 {}/{} 페이지 수집 / 적재 성공".format(sido_nm, pageNo, maxPage))
                 except Exception as e:
                     print("{}시 {}/{} 페이지 수집 / 적재 실패".format(sido_nm, pageNo, maxPage))
