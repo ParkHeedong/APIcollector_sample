@@ -45,7 +45,7 @@ def main():
                 maxPage = response_body['getOceansWemo']['totalCount'] // 10 + 1
                 data_list = response_body['getOceansWemo']['item']
                 df = json_normalize(data_list)
-                df.to_sql("getOceansWemo", engine, if_exists='append', index='false', chunksize=1000)
+                df.to_sql("getOceansWemo", engine, if_exists='append', index=False, chunksize=1000)
                 print("{}/{} 페이지 수집 / 적재 성공".format(pageNo, maxPage))
             except Exception as e:
                 print("{}/{} 페이지 수집 / 적재 실패".format(pageNo, maxPage))
