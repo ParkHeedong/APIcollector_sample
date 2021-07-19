@@ -45,7 +45,7 @@ def main():
                     maxPage = response_body['response']['body']['totalCount']//100 + 1
                     data_list = response_body['response']['body']['items']
                     df = json_normalize(data_list)
-                    df.to_sql("getUlfqtcaAlarmInfo", engine, if_exists='append', index='false', chunksize=1000)
+                    df.to_sql("getUlfqtcaAlarmInfo", engine, if_exists='append', index=False, chunksize=1000)
                     print("{0}년도 {1}/{2} 페이지 수집/적재 성공".format(year, pageNo, maxPage))
                 except Exception as e:
                     print("{0}년도 {1}/{2} 페이지 수집/적재 실패".format(year, pageNo, maxPage))
