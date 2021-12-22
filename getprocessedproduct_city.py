@@ -33,7 +33,7 @@ def main():
         baseDt += 1
         pageNo = 0
         maxPage = 10
-        serviceKey = "SEgDr%2FYfqIy3tcVNcNig53XdZI1%2FH4ab1uvtyOvmZscb1FgQqDvCansKw32gueJ75vcmMLPnYK%2FBWKYRTlGKAw%3D%3D"
+        serviceKey = "key"
         while(pageNo < maxPage):
             pageNo += 1
             url = "http://apis.data.go.kr/1192000/ManageAcst7020Service/getAcst7020List?ServiceKey={}&pageNo={}&numOfRows=10&type=json&baseDt={}".format(serviceKey, pageNo, baseDt)
