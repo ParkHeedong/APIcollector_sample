@@ -21,7 +21,7 @@ except:
     print("Not Connected!")
 
 #인증키
-encodingkey = "dXMdC0X%2BDRPxGEQ2sYQG5xKCJCFzRrcmxMmOq1qrB1RrV9FaWdA8tFGTsRXx1TLIxqEQTKdOWhTmFsYz0qyb%2Fg%3D%3D"
+encodingkey = "key"
 
 now = datetime.now()
 
