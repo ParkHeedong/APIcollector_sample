@@ -49,7 +49,7 @@ def main():
 
         pageNo = 0
         maxPage = 10
-        serviceKey = "SEgDr%2FYfqIy3tcVNcNig53XdZI1%2FH4ab1uvtyOvmZscb1FgQqDvCansKw32gueJ75vcmMLPnYK%2FBWKYRTlGKAw%3D%3D"
+        serviceKey = "key"
 
         while(pageNo < maxPage):
             pageNo += 1
