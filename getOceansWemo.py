@@ -32,7 +32,7 @@ def get_response(request):
 def main():
     pageNo = 0
     maxPage = 10
-    serviceKey = "SEgDr%2FYfqIy3tcVNcNig53XdZI1%2FH4ab1uvtyOvmZscb1FgQqDvCansKw32gueJ75vcmMLPnYK%2FBWKYRTlGKAw%3D%3D"
+    serviceKey = "key"
     while(pageNo < maxPage):
         pageNo += 1
         url = "http://apis.data.go.kr/B551979/service/OceansWemoService/getOceansWemo?pageNo={}&numOfRows=10&resultType=json&OCEAN_NM={}&STNPNT_KOREAN_NM={}&sdate=20180101&edate=20180130&ServiceKey={}".format(pageNo, ocean_nm, stnpnt_korean_nm, serviceKey)
