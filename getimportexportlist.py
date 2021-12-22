@@ -29,7 +29,7 @@ def get_response(request):
                     return None
 
 def main():
-    serviceKey = "SEgDr%2FYfqIy3tcVNcNig53XdZI1%2FH4ab1uvtyOvmZscb1FgQqDvCansKw32gueJ75vcmMLPnYK%2FBWKYRTlGKAw%3D%3D"
+    serviceKey = "key"
     pageNo = 0
     maxPage = 10
     while(pageNo < maxPage):
