@@ -31,7 +31,7 @@ def get_response(request):
 
 def main():
     
-    serviceKey = "SEgDr%2FYfqIy3tcVNcNig53XdZI1%2FH4ab1uvtyOvmZscb1FgQqDvCansKw32gueJ75vcmMLPnYK%2FBWKYRTlGKAw%3D%3D"
+    serviceKey = "key"
 
     sido_list = ['부산', '인천', '울산', '강원', '충남', '전북', '전남', '경북', '경남', '제주']
 
