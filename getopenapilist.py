@@ -27,7 +27,7 @@ def get_response(request):
                     return None
 
 def main():
-    serviceKey = "dXMdC0X%2BDRPxGEQ2sYQG5xKCJCFzRrcmxMmOq1qrB1RrV9FaWdA8tFGTsRXx1TLIxqEQTKdOWhTmFsYz0qyb%2Fg%3D%3D"
+    serviceKey = "key"
     page = 0
     perPage = 3000
     maxPage = 10
